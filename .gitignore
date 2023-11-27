@@ -1,1 +1,3 @@
 /my_site/db.sqlite3
+/my_site/blog/migrations/
+/venv/
