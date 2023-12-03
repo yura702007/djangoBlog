@@ -8,7 +8,7 @@ class PostListView(ListView):
     """
     Представление списка постов на основе класса
     """
-    queryset = Post.publish.all()
+    queryset = Post.published.all()
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'blog/post/list.html'
