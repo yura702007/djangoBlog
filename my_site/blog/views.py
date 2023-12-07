@@ -23,14 +23,32 @@ def post_comment(request, post_id):
     return render(request, 'blog/post/comment.html', {'post': post, 'form': form, 'comment': comment})
 
 
-class PostListView(ListView):
-    """
-    Представление списка постов на основе класса
-    """
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = 'blog/post/list.html'
+def post_list(request):
+    posts = Post.published.all()
+    # Постраничная разбивка с 3 постами на страницу
+    paginator = Paginator(posts, 3)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        # Если page_number не целое число,
+        # выдать 1 страницу
+        posts = paginator.page(1)
+    except EmptyPage:
+        # Если page_number находится вне диапазона,
+        # то выдать последнюю страницу
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'blog/post/list.html', {'posts': posts})
+
+
+# class PostListView(ListView):
+#     """
+#     Представление списка постов на основе класса
+#     """
+#     queryset = Post.published.all()
+#     context_object_name = 'posts'
+#     paginate_by = 3
+#     template_name = 'blog/post/list.html'
 
 
 def post_share(request, post_id):
