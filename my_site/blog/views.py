@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
 from .forms import EmailPostForm, CommentForm
 from django.views.decorators.http import require_POST
+from taggit.models import Tag
 
 
 @require_POST
@@ -23,8 +24,12 @@ def post_comment(request, post_id):
     return render(request, 'blog/post/comment.html', {'post': post, 'form': form, 'comment': comment})
 
 
-def post_list(request):
+def post_list(request, tag_slug=None):
     posts = Post.published.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tags__in=[tag])
     # Постраничная разбивка с 3 постами на страницу
     paginator = Paginator(posts, 3)
     page_number = request.GET.get('page', 1)
@@ -38,7 +43,7 @@ def post_list(request):
         # Если page_number находится вне диапазона,
         # то выдать последнюю страницу
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'blog/post/list.html', {'posts': posts})
+    return render(request, 'blog/post/list.html', {'posts': posts, 'tag': tag})
 
 
 # class PostListView(ListView):
