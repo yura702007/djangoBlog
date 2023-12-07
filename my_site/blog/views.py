@@ -15,12 +15,12 @@ def post_comment(request, post_id):
     form = CommentForm(data=request.POST)
     if form.is_valid():
         # Создать объект класса Comment, не сохраняя его в базе данных
-        form.save(commit=False)
+        comment = form.save(commit=False)
         # Назначить пост комментарию
         comment.post = post
         # Сохранить комментарий в базе данных
         comment.save()
-    return render(request, 'blog/post/comment.http', {'post': post, 'form': form, 'comment': comment})
+    return render(request, 'blog/post/comment.html', {'post': post, 'form': form, 'comment': comment})
 
 
 class PostListView(ListView):
