@@ -1,0 +1,6 @@
+#  Выгрузить данные из БД в файл.json
+python manage.py dumpdata --indent=2 --output=blog_data.json
+
+
+#  Загрузить данные из файл.json в БД
+python manage.py loaddata blog_data.json
