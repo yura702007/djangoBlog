@@ -11,7 +11,7 @@
                 Found {{ total_results }} results{{ total_results|pluralize}}
             {% endwith %}
         </h3>
-        {% for post results %}
+        {% for post in results %}
             <h4>
                 <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
             </h4>
