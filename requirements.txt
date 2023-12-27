@@ -6,7 +6,6 @@ charset-normalizer==3.3.2
 colorama==0.4.6
 cryptography==41.0.7
 decorator==5.1.1
-defusedxml==0.8.0rc2
 Django==4.2.7
 django-extensions==3.2.3
 django-taggit==3.0.0
