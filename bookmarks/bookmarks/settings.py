@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 import django.core.mail.backends.console
+import social_core.backends.facebook
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,8 +57,13 @@ MIDDLEWARE = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'account.authentication.EmailAuthBackend'
+    'account.authentication.EmailAuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
 ]
+
+SOCIAL_AUTH_FACEBOOK_KEY = '2255637534621842'  # ИД приложения Facebook
+SOCIAL_AUTH_FACEBOOK_SECRET = 'dcc5d2dd886214ed78dc3715cd34f990'  # Секрет приложения Facebook
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 ROOT_URLCONF = 'bookmarks.urls'
 
